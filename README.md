@@ -33,42 +33,36 @@ This delivers a modern, production-style data stack with automation, quality che
 ## 🏗️ System Architecture
 
 ```
+      +-------------------------+
+      |      yfinance API       |
+      +-----------+-------------+
+                  |
+                  v
+      +-----------+-------------+
+      |   Airflow ETL DAG       |
+      | fetch_crypto_data_dag   |
+      +-----------+-------------+
+                  |
+                  v
+    RAW Layer: PARROT_RAW.CRYPTO_PRICES
+                  |
+            (dbt run/test)
+                  |
+                  v
+    FEAT Layer: PARROT_FEAT.STAGING / FEATURES
+                  |
+             MART Layer:
+   PARROT_FEAT.MART_CRYPTO_SUMMARY   <--- Dashboard uses this
+                  |
+            (dbt snapshot)
+                  |
+                  v
+   SNAP Layer: PARROT_SNAP.CRYPTO_PRICES_SNAPSHOT
+                  |
+                  v
+        Preset / Superset Dashboard
 
 ```
-  +-------------------------+
-  |      yfinance API       |
-  +-----------+-------------+
-              |
-              v
-  +-----------+-------------+
-  |   Airflow ETL DAG       |
-  | fetch_crypto_data_dag   |
-  +-----------+-------------+
-              |
-              v
-RAW Layer: PARROT_RAW.CRYPTO_PRICES
-              |
-        (dbt run/test)
-              |
-              v
-FEAT Layer: PARROT_FEAT staging + features
-              |
-              v
-```
-
-MART Layer: PARROT_FEAT.MART_CRYPTO_SUMMARY   <--- Dashboard uses this
-|
-(dbt snapshot)
-|
-v
-SNAP Layer: PARROT_SNAP.CRYPTO_PRICES_SNAPSHOT
-|
-v
-Preset / Superset Dashboard
-
-```
-
----
 
 ## 🧩 Components
 
