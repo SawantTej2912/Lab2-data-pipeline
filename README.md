@@ -1,6 +1,4 @@
 
-
-```markdown
 # Lab 2 – End-to-End Crypto Analytics Pipeline  
 ### Snowflake • Apache Airflow • dbt • Preset (BI Dashboard)
 
