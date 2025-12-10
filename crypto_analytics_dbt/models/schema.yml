@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_crypto_prices
+    description: "Staging model for raw crypto prices."
+    columns:
+      - name: symbol
+        tests:
+          - not_null
+      - name: price_date
+        tests:
+          - not_null
+
+  - name: int_crypto_features
+    description: "Intermediate feature model with moving averages and momentum."
+    columns:
+      - name: symbol
+        tests:
+          - not_null
+      - name: price_date
+        tests:
+          - not_null
+
+  - name: mart_crypto_summary
+    description: "Final mart model for BI dashboards."
+    columns:
+      - name: symbol
+        tests:
+          - not_null
+      - name: price_date
+        tests:
+          - not_null
